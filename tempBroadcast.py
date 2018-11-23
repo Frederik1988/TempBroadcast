@@ -1,32 +1,41 @@
-BROADCAST_TO_PORT = 7000
+BROADCAST_TO_PORT = 5687
 from sense_hat import SenseHat
-import time
+from time import sleep
 from socket import *
 from datetime import datetime
 
 s = socket(AF_INET, SOCK_DGRAM)
-#s.bind(('', 14593))     # (ip, port)
-# no explicit bind: will bind to default IP + random port
+#s.bind(('', 14593))   #(ip, port)
+# no explicit bind : will bind to default IP + random port
+
 s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+
 counter = 0
 
+sense = SenseHat()
+def get_sense_data(index):
+  hum = sense.get_humidity()
+  temp = sense.get_temperature()
+  press = sense.get_pressure()
+
+  sense_data = []
+  sense_data.append(temp)
+  sense_data.append(hum)
+  sense_data.append(press)
+  return sense_data[index]
+
+
 while True:
-  temp = "Temperaturen er: " + str(sense.get_temperature())
-  pres = "Lufttrykket er: " + str(sense.get_pressure())
-  hum = "Luftfugtigheden er: " + str(sense.get_humidity())
   
-	s.sendto(bytes(pres, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
-	print(pres)
-	
-	s.sendto(bytes(hum, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
-	print(hum)
-	
-	
-	if (counter==5):
-	  s.sendto(bytes(temp, "UTF-8), ")('<broadcast>', BROADCAST_TO_PORT))
-	  print(temp)
-	  counter = 0
-	  
-	 counter++
-	 
-	 time.sleep(1)
+  if (counter == 5):
+    data = "Raspberry pi 22" + "\n" + "Current time: " + str(datetime.now())+ "\n" + "Temperature: " +  str(get_sense_data(0)) + "\n" + "Humidity: " + str(get_sense_data(1)) + "\n" + "Pressure: " + str(get_sense_data(2)) + "\n"
+    s.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
+    print(data)
+    sleep(5)
+    counter = 0
+  
+  data = "Raspberry pi 22" + "\n" + "Current time: " + str(datetime.now())+ "\n" + "Temperature: " +  str(get_sense_data(0)) + "\n" + "Humidity: " + str(get_sense_data(1)) + "\n"
+  s.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
+  print(data)
+  sleep(5)
+  
