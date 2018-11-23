@@ -1,4 +1,4 @@
-BROADCAST_TO_PORT = 5687
+BROADCAST_TO_PORT = 5587
 from sense_hat import SenseHat
 from time import sleep
 from socket import *
