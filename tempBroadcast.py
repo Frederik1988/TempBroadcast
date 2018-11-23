@@ -37,5 +37,7 @@ while True:
   data = "Raspberry pi 22" + "\n" + "Current time: " + str(datetime.now())+ "\n" + "Temperature: " +  str(get_sense_data(0)) + "\n" + "Humidity: " + str(get_sense_data(1)) + "\n"
   s.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
   print(data)
-  sleep(5)
+  sleep(3)
+  
+  counter++
   
