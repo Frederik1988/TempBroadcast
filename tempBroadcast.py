@@ -14,11 +14,7 @@ while True:
   temp = "Temperaturen er: " + str(sense.get_temperature())
   pres = "Lufttrykket er: " + str(sense.get_pressure())
   hum = "Luftfugtigheden er: " + str(sense.get_humidity())
-	data = "Klokken er: " + str(datetime.now())
-	
-	s.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
-	print(data)
-	
+  
 	s.sendto(bytes(pres, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
 	print(pres)
 	
