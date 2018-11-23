@@ -39,5 +39,5 @@ while True:
   print(data)
   sleep(3)
   
-  counter++
+  counter = counter+1
   
