@@ -10,7 +10,7 @@ s = socket(AF_INET, SOCK_DGRAM)
 
 s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
-counter = 0
+counter = 1
 
 sense = SenseHat()
 def get_sense_data(index):
@@ -32,7 +32,7 @@ while True:
     s.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
     print(data)
     sleep(5)
-    counter = 0
+    counter = 1
   
   data = "Raspberry pi 22" + "\n" + "Current time: " + str(datetime.now())+ "\n" + "Temperature: " +  str(get_sense_data(0)) + "\n" + "Humidity: " + str(get_sense_data(1)) + "\n"
   s.sendto(bytes(data, "UTF-8"), ('<broadcast>', BROADCAST_TO_PORT))
